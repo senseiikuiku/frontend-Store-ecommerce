@@ -1,0 +1,41 @@
+.relative {
+   position: relative; /* Để làm cha cho các thành phần con */
+   height: 100%; /* Đảm bảo chiều cao đầy đủ nếu cần */
+}
+.page {
+   position: fixed; /* Sử dụng sticky để giữ nguyên vị trí */
+   top: 776px; /* Định vị khoảng cách từ container cha */
+
+   right: 23px; /* Khoảng cách từ cạnh phải */
+   z-index: 10; /* Đảm bảo phần tử nằm trên các lớp khác */
+   width: fit-content;
+   padding: 5px;
+   transition: all 0.3s linear;
+   border-radius: 6px;
+   background-color: rgba(0, 0, 0, 0.1); /* Nền nhẹ */
+}
+.page:hover {
+   /* border: 1px solid rgba(252, 165, 165, 0.4); */
+   box-shadow: 2px 1px 23px 1px #ff5b2e6b;
+}
+
+.format {
+   max-width: 100px; /* Đặt chiều rộng của phần tử */
+   white-space: nowrap; /* Ngăn không cho văn bản xuống dòng */
+   overflow: hidden; /* Ẩn văn bản vượt quá chiều rộng */
+   text-overflow: ellipsis; /* Hiển thị dấu ba chấm ở cuối */
+}
+
+.admin {
+   padding: 12px;
+   border-radius: 6px;
+   border: 1px solid yellow;
+   background-color: #6de09c;
+   color: white;
+   cursor: not-allowed;
+   transition: all 0.3s linear;
+}
+
+.admin:hover {
+   box-shadow: 2px 1px 23px 1px #6de09c;
+}

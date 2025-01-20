@@ -1,0 +1,627 @@
+/*
+ Navicat Premium Dump SQL
+
+ Source Server         : MySQL80
+ Source Server Type    : MySQL
+ Source Server Version : 80039 (8.0.39)
+ Source Host           : localhost:3306
+ Source Schema         : store_database
+
+ Target Server Type    : MySQL
+ Target Server Version : 80039 (8.0.39)
+ File Encoding         : 65001
+
+ Date: 23/12/2024 18:33:42
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for addresses
+-- ----------------------------
+DROP TABLE IF EXISTS `addresses`;
+CREATE TABLE `addresses`  (
+  `address_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `postal_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `city` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `district` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `ward` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `address_line1` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `address_line2` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `is_default` tinyint(1) NULL DEFAULT 0,
+  `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`address_id`) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  CONSTRAINT `addresses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of addresses
+-- ----------------------------
+INSERT INTO `addresses` VALUES (1, 1, '700000', 'Ho Chi Minh City', 'District 1', 'Ward 1', '123 Main St', 'Building A, Floor 5', 1, '2024-12-01 13:52:32', '2024-12-01 13:52:32');
+INSERT INTO `addresses` VALUES (2, 2, '100000', 'Hanoi', 'District 3', 'Ward 2', '456 Nguyen Hue', NULL, 0, '2024-12-01 13:52:32', '2024-12-01 13:52:32');
+INSERT INTO `addresses` VALUES (3, 3, '500000', 'Da Nang', 'District 5', 'Ward 3', '789 Le Lai', 'Block C', 0, '2024-12-01 13:52:32', '2024-12-01 13:52:32');
+INSERT INTO `addresses` VALUES (4, 4, '700000', 'Ho Chi Minh City', 'District 10', 'Ward 4', '321 Phan Boi Chau', NULL, 0, '2024-12-01 13:52:32', '2024-12-01 13:52:32');
+INSERT INTO `addresses` VALUES (5, 5, '500000', 'Da Nang', 'District 7', 'Ward 5', '654 Nguyen Tri Phuong', 'Room 101', 0, '2024-12-01 13:52:32', '2024-12-01 13:52:32');
+INSERT INTO `addresses` VALUES (6, 6, '100000', 'Hanoi', 'District 1', 'Ward 6', '987 Tran Hung Dao', 'Apartment 3B', 1, '2024-12-01 13:52:32', '2024-12-01 13:52:32');
+INSERT INTO `addresses` VALUES (7, 7, '700000', 'Ho Chi Minh City', 'District 4', 'Ward 7', '135 Le Duan', NULL, 0, '2024-12-01 13:52:32', '2024-12-01 13:52:32');
+INSERT INTO `addresses` VALUES (8, 8, '400000', 'Haiphong', 'District 6', 'Ward 8', '246 Hoang Hoa Tham', 'Block D', 0, '2024-12-01 13:52:32', '2024-12-01 13:52:32');
+INSERT INTO `addresses` VALUES (9, 9, '200000', 'Hue', 'District 7', 'Ward 9', '468 Minh Khai', NULL, 0, '2024-12-01 13:52:32', '2024-12-01 13:52:32');
+INSERT INTO `addresses` VALUES (10, 10, '900000', 'Can Tho', 'District 2', 'Ward 10', '789 Ngo Quyen', 'Floor 3', 1, '2024-12-01 13:52:32', '2024-12-01 13:52:32');
+
+-- ----------------------------
+-- Table structure for carts
+-- ----------------------------
+DROP TABLE IF EXISTS `carts`;
+CREATE TABLE `carts`  (
+  `cart_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `quantity` int NULL DEFAULT 1,
+  `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_at` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`cart_id`) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  INDEX `product_id`(`product_id` ASC) USING BTREE,
+  CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of carts
+-- ----------------------------
+INSERT INTO `carts` VALUES (1, 1, 1, 2, '2024-12-01 14:02:27', '2024-12-01 14:02:27');
+INSERT INTO `carts` VALUES (2, 2, 2, 1, '2024-12-01 14:02:27', '2024-12-01 14:02:27');
+INSERT INTO `carts` VALUES (3, 3, 3, 3, '2024-12-01 14:02:27', '2024-12-01 14:02:27');
+INSERT INTO `carts` VALUES (4, 4, 4, 1, '2024-12-01 14:02:27', '2024-12-01 14:02:27');
+INSERT INTO `carts` VALUES (5, 5, 5, 1, '2024-12-01 14:02:27', '2024-12-01 14:02:27');
+INSERT INTO `carts` VALUES (6, 6, 1, 1, '2024-12-01 14:02:27', '2024-12-01 14:02:27');
+INSERT INTO `carts` VALUES (7, 7, 2, 2, '2024-12-01 14:02:27', '2024-12-01 14:02:27');
+INSERT INTO `carts` VALUES (8, 8, 3, 1, '2024-12-01 14:02:27', '2024-12-01 14:02:27');
+INSERT INTO `carts` VALUES (9, 9, 4, 2, '2024-12-01 14:02:27', '2024-12-01 14:02:27');
+INSERT INTO `carts` VALUES (10, 10, 5, 3, '2024-12-01 14:02:27', '2024-12-01 14:02:27');
+
+-- ----------------------------
+-- Table structure for categories
+-- ----------------------------
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE `categories`  (
+  `category_id` int NOT NULL AUTO_INCREMENT,
+  `category_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `image_url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
+  `status` enum('active','inactive') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT 'active',
+  `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`category_id`) USING BTREE,
+  UNIQUE INDEX `category_name`(`category_name` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of categories
+-- ----------------------------
+INSERT INTO `categories` VALUES (1, 'Electronics', 'Electronic devices including mobile phones, laptops, and accessories.', 'electronics', 'https://example.com/images/electronics.jpg', 'active', '2024-12-01 13:34:55', '2024-12-01 13:34:55');
+INSERT INTO `categories` VALUES (2, 'Clothing', 'Fashion items for men, women, and kids.', 'clothing', 'https://example.com/images/clothing.jpg', 'active', '2024-12-01 13:34:55', '2024-12-01 13:34:55');
+INSERT INTO `categories` VALUES (3, 'Home Appliances', 'Appliances for home use including refrigerators, washing machines, and air conditioners.', 'home-appliances', 'https://example.com/images/home-appliances.jpg', 'active', '2024-12-01 13:34:55', '2024-12-01 13:34:55');
+INSERT INTO `categories` VALUES (4, 'Beauty & Health', 'Beauty products, skincare, haircare, and health supplements.', 'beauty-health', 'https://example.com/images/beauty-health.jpg', 'active', '2024-12-01 13:34:55', '2024-12-01 13:34:55');
+INSERT INTO `categories` VALUES (5, 'Sports & Outdoors', 'Sports gear, outdoor equipment, and accessories.', 'sports-outdoors', 'https://example.com/images/sports-outdoors.jpg', 'active', '2024-12-01 13:34:55', '2024-12-01 13:34:55');
+INSERT INTO `categories` VALUES (6, 'Toys & Games', 'Toys for children and various board games.', 'toys-games', 'https://example.com/images/toys-games.jpg', 'active', '2024-12-01 13:34:55', '2024-12-01 13:34:55');
+INSERT INTO `categories` VALUES (7, 'Books', 'Books across various genres including fiction, non-fiction, and educational materials.', 'books', 'https://example.com/images/books.jpg', 'active', '2024-12-01 13:34:55', '2024-12-01 13:34:55');
+INSERT INTO `categories` VALUES (8, 'Furniture', 'Furniture for living rooms, bedrooms, offices, and more.', 'furniture', 'https://example.com/images/furniture.jpg', 'active', '2024-12-01 13:34:55', '2024-12-01 13:34:55');
+INSERT INTO `categories` VALUES (9, 'Food & Beverages', 'Grocery, snacks, drinks, and other food products.', 'food-beverages', 'https://example.com/images/food-beverages.jpg', 'active', '2024-12-01 13:34:55', '2024-12-01 13:34:55');
+INSERT INTO `categories` VALUES (10, 'Automotive', 'Car accessories, spare parts, and maintenance products.', 'automotive', 'https://example.com/images/automotive.jpg', 'active', '2024-12-01 13:34:55', '2024-12-01 13:34:55');
+
+-- ----------------------------
+-- Table structure for comments
+-- ----------------------------
+DROP TABLE IF EXISTS `comments`;
+CREATE TABLE `comments`  (
+  `comment_id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `parent_id` int NULL DEFAULT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `rating` int NULL DEFAULT NULL,
+  `status` enum('visible','hidden') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT 'visible',
+  `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`comment_id`) USING BTREE,
+  INDEX `product_id`(`product_id` ASC) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `comments_chk_1` CHECK (`rating` between 1 and 5)
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of comments
+-- ----------------------------
+INSERT INTO `comments` VALUES (1, 1, 1, NULL, 'Great smartphone with excellent camera quality!', 5, 'visible', '2024-12-01 13:43:42', '2024-12-01 13:43:42');
+INSERT INTO `comments` VALUES (2, 1, 2, NULL, 'Good phone but battery life could be better.', 3, 'visible', '2024-12-01 13:43:42', '2024-12-01 13:43:42');
+INSERT INTO `comments` VALUES (3, 2, 3, NULL, 'Comfortable and stylish jeans, highly recommend!', 4, 'visible', '2024-12-01 13:43:42', '2024-12-01 13:43:42');
+INSERT INTO `comments` VALUES (4, 2, 4, NULL, 'The fabric is a bit thin, not great for cold weather.', 2, 'visible', '2024-12-01 13:43:42', '2024-12-01 13:43:42');
+INSERT INTO `comments` VALUES (5, 3, 5, NULL, 'Excellent washing machine, washes clothes perfectly.', 5, 'visible', '2024-12-01 13:43:42', '2024-12-01 13:43:42');
+INSERT INTO `comments` VALUES (6, 3, 6, NULL, 'Makes a lot of noise, not satisfied with the performance.', 2, 'visible', '2024-12-01 13:43:42', '2024-12-01 13:43:42');
+INSERT INTO `comments` VALUES (7, 4, 7, NULL, 'The serum works well for my skin, I can see improvement.', 5, 'visible', '2024-12-01 13:43:42', '2024-12-01 13:43:42');
+INSERT INTO `comments` VALUES (8, 4, 8, NULL, 'Not effective for me, would not recommend.', 1, 'visible', '2024-12-01 13:43:42', '2024-12-01 13:43:42');
+INSERT INTO `comments` VALUES (9, 5, 9, NULL, 'Great racket, feels very durable and powerful on the court.', 5, 'visible', '2024-12-01 13:43:42', '2024-12-01 13:43:42');
+INSERT INTO `comments` VALUES (10, 5, 10, 6, 'Agree, great racket but the grip could be better. My hand slipped during a few shots.', 4, 'visible', '2024-12-01 13:43:42', '2024-12-01 13:43:42');
+INSERT INTO `comments` VALUES (11, 1, 1, NULL, 'Great smartphone with excellent camera quality!', 5, 'visible', '2024-12-01 13:45:39', '2024-12-01 13:45:39');
+INSERT INTO `comments` VALUES (12, 1, 2, NULL, 'Good phone but battery life could be better.', 3, 'visible', '2024-12-01 13:45:39', '2024-12-01 13:45:39');
+INSERT INTO `comments` VALUES (13, 2, 3, NULL, 'Comfortable and stylish jeans, highly recommend!', 4, 'visible', '2024-12-01 13:45:39', '2024-12-01 13:45:39');
+INSERT INTO `comments` VALUES (14, 2, 4, NULL, 'The fabric is a bit thin, not great for cold weather.', 2, 'visible', '2024-12-01 13:45:39', '2024-12-01 13:45:39');
+INSERT INTO `comments` VALUES (15, 3, 5, NULL, 'Excellent washing machine, washes clothes perfectly.', 5, 'visible', '2024-12-01 13:45:39', '2024-12-01 13:45:39');
+INSERT INTO `comments` VALUES (16, 3, 6, NULL, 'Makes a lot of noise, not satisfied with the performance.', 2, 'visible', '2024-12-01 13:45:39', '2024-12-01 13:45:39');
+INSERT INTO `comments` VALUES (17, 4, 7, NULL, 'The serum works well for my skin, I can see improvement.', 5, 'visible', '2024-12-01 13:45:39', '2024-12-01 13:45:39');
+INSERT INTO `comments` VALUES (18, 4, 8, NULL, 'Not effective for me, would not recommend.', 1, 'visible', '2024-12-01 13:45:39', '2024-12-01 13:45:39');
+INSERT INTO `comments` VALUES (19, 5, 9, NULL, 'Great racket, feels very durable and powerful on the court.', 5, 'visible', '2024-12-01 13:45:39', '2024-12-01 13:45:39');
+INSERT INTO `comments` VALUES (20, 5, 10, 6, 'Agree, great racket but the grip could be better. My hand slipped during a few shots.', 4, 'visible', '2024-12-01 13:45:39', '2024-12-01 13:45:39');
+
+-- ----------------------------
+-- Table structure for coupon_products
+-- ----------------------------
+DROP TABLE IF EXISTS `coupon_products`;
+CREATE TABLE `coupon_products`  (
+  `coupon_product_id` int NOT NULL AUTO_INCREMENT,
+  `coupon_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  PRIMARY KEY (`coupon_product_id`) USING BTREE,
+  INDEX `coupon_id`(`coupon_id` ASC) USING BTREE,
+  INDEX `product_id`(`product_id` ASC) USING BTREE,
+  CONSTRAINT `coupon_products_ibfk_1` FOREIGN KEY (`coupon_id`) REFERENCES `coupons` (`coupon_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `coupon_products_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of coupon_products
+-- ----------------------------
+INSERT INTO `coupon_products` VALUES (1, 1, 1);
+INSERT INTO `coupon_products` VALUES (2, 1, 2);
+INSERT INTO `coupon_products` VALUES (3, 2, 3);
+INSERT INTO `coupon_products` VALUES (4, 3, 4);
+INSERT INTO `coupon_products` VALUES (5, 4, 5);
+INSERT INTO `coupon_products` VALUES (6, 5, 6);
+INSERT INTO `coupon_products` VALUES (7, 6, 7);
+INSERT INTO `coupon_products` VALUES (8, 7, 8);
+INSERT INTO `coupon_products` VALUES (9, 8, 9);
+INSERT INTO `coupon_products` VALUES (10, 9, 10);
+
+-- ----------------------------
+-- Table structure for coupons
+-- ----------------------------
+DROP TABLE IF EXISTS `coupons`;
+CREATE TABLE `coupons`  (
+  `coupon_id` int NOT NULL AUTO_INCREMENT,
+  `coupon_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `discount_type` enum('percentage','fixed') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `discount_value` decimal(10, 2) NOT NULL,
+  `min_order_value` decimal(10, 2) NULL DEFAULT NULL,
+  `expiration_date` datetime NOT NULL,
+  `usage_limit` int NULL DEFAULT NULL,
+  `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`coupon_id`) USING BTREE,
+  UNIQUE INDEX `coupon_code`(`coupon_code` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of coupons
+-- ----------------------------
+INSERT INTO `coupons` VALUES (1, 'DISCOUNT10', 'percentage', 10.00, 100.00, '2024-12-31 23:59:59', 500, '2024-12-01 13:39:34', '2024-12-01 13:39:34');
+INSERT INTO `coupons` VALUES (2, 'SAVE20', 'percentage', 20.00, 200.00, '2024-11-30 23:59:59', 300, '2024-12-01 13:39:34', '2024-12-01 13:39:34');
+INSERT INTO `coupons` VALUES (3, 'XMAS50', 'fixed', 50.00, NULL, '2024-12-25 23:59:59', 100, '2024-12-01 13:39:34', '2024-12-01 13:39:34');
+INSERT INTO `coupons` VALUES (4, 'FREESHIP', 'fixed', 0.00, 50.00, '2024-12-31 23:59:59', 1000, '2024-12-01 13:39:34', '2024-12-01 13:39:34');
+INSERT INTO `coupons` VALUES (5, 'BLACKFRIDAY30', 'percentage', 30.00, 150.00, '2024-11-29 23:59:59', 200, '2024-12-01 13:39:34', '2024-12-01 13:39:34');
+INSERT INTO `coupons` VALUES (6, 'NEWYEAR100', 'fixed', 100.00, NULL, '2025-01-01 23:59:59', 50, '2024-12-01 13:39:34', '2024-12-01 13:39:34');
+INSERT INTO `coupons` VALUES (7, 'WELCOME15', 'percentage', 15.00, 50.00, '2025-01-31 23:59:59', 300, '2024-12-01 13:39:34', '2024-12-01 13:39:34');
+INSERT INTO `coupons` VALUES (8, 'EASTER25', 'percentage', 25.00, 75.00, '2024-04-05 23:59:59', 400, '2024-12-01 13:39:34', '2024-12-01 13:39:34');
+INSERT INTO `coupons` VALUES (9, 'SEASONAL40', 'percentage', 40.00, 250.00, '2024-12-15 23:59:59', 150, '2024-12-01 13:39:34', '2024-12-01 13:39:34');
+INSERT INTO `coupons` VALUES (10, 'VIP50', 'fixed', 50.00, NULL, '2024-12-31 23:59:59', 50, '2024-12-01 13:39:34', '2024-12-01 13:39:34');
+
+-- ----------------------------
+-- Table structure for histories
+-- ----------------------------
+DROP TABLE IF EXISTS `histories`;
+CREATE TABLE `histories`  (
+  `log_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NULL DEFAULT NULL,
+  `action` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
+  `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`log_id`) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  CONSTRAINT `histories_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of histories
+-- ----------------------------
+INSERT INTO `histories` VALUES (1, 1, 'Đăng nhập', 'Người dùng đăng nhập vào hệ thống', '2024-12-01 08:30:00');
+INSERT INTO `histories` VALUES (2, 2, 'Mua hàng', 'Người dùng đã đặt hàng sản phẩm \"Áo thun\" với số lượng 2', '2024-12-01 09:15:00');
+INSERT INTO `histories` VALUES (3, 3, 'Cập nhật thông tin', 'Người dùng thay đổi số điện thoại', '2024-12-01 10:00:00');
+INSERT INTO `histories` VALUES (4, 4, 'Đăng ký tài khoản', 'Người dùng mới đăng ký tài khoản với email \"user4@example.com\"', '2024-12-01 10:30:00');
+INSERT INTO `histories` VALUES (5, 5, 'Hủy đơn hàng', 'Người dùng hủy đơn hàng với mã \"ODR00123\"', '2024-12-01 11:00:00');
+INSERT INTO `histories` VALUES (6, 6, 'Đổi mật khẩu', 'Người dùng đã thay đổi mật khẩu tài khoản', '2024-12-01 12:00:00');
+INSERT INTO `histories` VALUES (7, 7, 'Thêm sản phẩm vào giỏ hàng', 'Người dùng đã thêm sản phẩm \"Laptop\" vào giỏ hàng', '2024-12-01 13:00:00');
+INSERT INTO `histories` VALUES (8, 8, 'Xóa sản phẩm khỏi giỏ hàng', 'Người dùng đã xóa sản phẩm \"Tai nghe\" khỏi giỏ hàng', '2024-12-01 14:30:00');
+INSERT INTO `histories` VALUES (9, 9, 'Đặt câu hỏi về sản phẩm', 'Người dùng đã hỏi về thông tin sản phẩm \"Smartphone ABC\"', '2024-12-01 15:00:00');
+INSERT INTO `histories` VALUES (10, 10, 'Đánh giá sản phẩm', 'Người dùng đã đánh giá 5 sao cho sản phẩm \"Đồng hồ thông minh\"', '2024-12-01 16:00:00');
+
+-- ----------------------------
+-- Table structure for images
+-- ----------------------------
+DROP TABLE IF EXISTS `images`;
+CREATE TABLE `images`  (
+  `image_id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `image_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `is_primary` tinyint(1) NULL DEFAULT 0,
+  `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`image_id`) USING BTREE,
+  INDEX `product_id`(`product_id` ASC) USING BTREE,
+  CONSTRAINT `images_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of images
+-- ----------------------------
+INSERT INTO `images` VALUES (1, 1, 'https://example.com/images/smartphone_xyz_1.jpg', 1, '2024-12-01 13:40:50', '2024-12-01 13:40:50');
+INSERT INTO `images` VALUES (2, 1, 'https://example.com/images/smartphone_xyz_2.jpg', 0, '2024-12-01 13:40:50', '2024-12-01 13:40:50');
+INSERT INTO `images` VALUES (3, 2, 'https://example.com/images/blue_jeans_1.jpg', 1, '2024-12-01 13:40:50', '2024-12-01 13:40:50');
+INSERT INTO `images` VALUES (4, 2, 'https://example.com/images/blue_jeans_2.jpg', 0, '2024-12-01 13:40:50', '2024-12-01 13:40:50');
+INSERT INTO `images` VALUES (5, 3, 'https://example.com/images/washing_machine_abc_1.jpg', 1, '2024-12-01 13:40:50', '2024-12-01 13:40:50');
+INSERT INTO `images` VALUES (6, 3, 'https://example.com/images/washing_machine_abc_2.jpg', 0, '2024-12-01 13:40:50', '2024-12-01 13:40:50');
+INSERT INTO `images` VALUES (7, 4, 'https://example.com/images/anti_aging_serum_1.jpg', 1, '2024-12-01 13:40:50', '2024-12-01 13:40:50');
+INSERT INTO `images` VALUES (8, 4, 'https://example.com/images/anti_aging_serum_2.jpg', 0, '2024-12-01 13:40:50', '2024-12-01 13:40:50');
+INSERT INTO `images` VALUES (9, 5, 'https://example.com/images/tennis_racket_1.jpg', 1, '2024-12-01 13:40:50', '2024-12-01 13:40:50');
+INSERT INTO `images` VALUES (10, 5, 'https://example.com/images/tennis_racket_2.jpg', 0, '2024-12-01 13:40:50', '2024-12-01 13:40:50');
+
+-- ----------------------------
+-- Table structure for likes
+-- ----------------------------
+DROP TABLE IF EXISTS `likes`;
+CREATE TABLE `likes`  (
+  `like_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `product_id` int NULL DEFAULT NULL,
+  `comment_id` int NULL DEFAULT NULL,
+  `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_at` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`like_id`) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  INDEX `product_id`(`product_id` ASC) USING BTREE,
+  INDEX `comment_id`(`comment_id` ASC) USING BTREE,
+  CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `likes_ibfk_3` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`comment_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `check_like_target` CHECK (((`product_id` is not null) and (`comment_id` is null)) or ((`product_id` is null) and (`comment_id` is not null)))
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of likes
+-- ----------------------------
+INSERT INTO `likes` VALUES (1, 1, 1, NULL, '2024-12-01 08:30:00', '2024-12-01 08:30:00');
+INSERT INTO `likes` VALUES (2, 2, 3, NULL, '2024-12-01 09:00:00', '2024-12-01 09:00:00');
+INSERT INTO `likes` VALUES (3, 3, 3, NULL, '2024-12-01 09:15:00', '2024-12-01 09:15:00');
+INSERT INTO `likes` VALUES (4, 4, 4, NULL, '2024-12-01 09:30:00', '2024-12-01 09:30:00');
+INSERT INTO `likes` VALUES (5, 5, 5, NULL, '2024-12-01 10:00:00', '2024-12-01 10:00:00');
+INSERT INTO `likes` VALUES (6, 6, NULL, 1, '2024-12-01 10:30:00', '2024-12-01 10:30:00');
+INSERT INTO `likes` VALUES (7, 7, NULL, 3, '2024-12-01 11:00:00', '2024-12-01 11:00:00');
+INSERT INTO `likes` VALUES (8, 8, NULL, 3, '2024-12-01 11:30:00', '2024-12-01 11:30:00');
+INSERT INTO `likes` VALUES (9, 9, NULL, 4, '2024-12-01 12:00:00', '2024-12-01 12:00:00');
+INSERT INTO `likes` VALUES (10, 10, NULL, 5, '2024-12-01 12:30:00', '2024-12-01 12:30:00');
+
+-- ----------------------------
+-- Table structure for messages
+-- ----------------------------
+DROP TABLE IF EXISTS `messages`;
+CREATE TABLE `messages`  (
+  `message_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `sent_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`message_id`) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of messages
+-- ----------------------------
+INSERT INTO `messages` VALUES (1, 1, 'Chào, tôi cần hỗ trợ về đơn hàng của mình.', '2024-12-01 08:30:00');
+INSERT INTO `messages` VALUES (2, 2, 'Làm ơn gửi lại thông tin thanh toán của tôi.', '2024-12-01 09:00:00');
+INSERT INTO `messages` VALUES (3, 3, 'Tôi đã nhận được sản phẩm, cảm ơn bạn!', '2024-12-01 09:15:00');
+INSERT INTO `messages` VALUES (4, 4, 'Tôi muốn thay đổi địa chỉ giao hàng cho đơn hàng #ODR00124.', '2024-12-01 10:00:00');
+INSERT INTO `messages` VALUES (5, 5, 'Khi nào tôi có thể nhận hàng? Cảm ơn!', '2024-12-01 10:30:00');
+INSERT INTO `messages` VALUES (6, 6, 'Sản phẩm bị lỗi, tôi muốn hoàn trả.', '2024-12-01 11:00:00');
+INSERT INTO `messages` VALUES (7, 7, 'Tôi đã thêm sản phẩm vào giỏ, làm thế nào để thanh toán?', '2024-12-01 11:30:00');
+INSERT INTO `messages` VALUES (8, 8, 'Có thể cung cấp thêm thông tin về sản phẩm này không?', '2024-12-01 12:00:00');
+INSERT INTO `messages` VALUES (9, 9, 'Xin vui lòng giải quyết vấn đề của tôi ngay lập tức.', '2024-12-01 12:30:00');
+INSERT INTO `messages` VALUES (10, 10, 'Tôi cần hỗ trợ với việc đổi hàng cho đơn hàng #ODR00125.', '2024-12-01 13:00:00');
+
+-- ----------------------------
+-- Table structure for notifications
+-- ----------------------------
+DROP TABLE IF EXISTS `notifications`;
+CREATE TABLE `notifications`  (
+  `notification_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `type` enum('order','promotion','system') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `is_read` tinyint(1) NULL DEFAULT 0,
+  `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`notification_id`) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of notifications
+-- ----------------------------
+INSERT INTO `notifications` VALUES (1, 1, 'order', 'Đơn hàng #ORD00123 của bạn đã được xác nhận. Xin vui lòng kiểm tra.', 0, '2024-12-01 08:30:00');
+INSERT INTO `notifications` VALUES (2, 2, 'promotion', 'Giảm giá 10% cho tất cả các sản phẩm trong tháng này. Sử dụng mã \"DISCOUNT10\" khi thanh toán.', 0, '2024-12-01 09:00:00');
+INSERT INTO `notifications` VALUES (3, 3, 'system', 'Hệ thống sẽ bảo trì từ 22:00 đến 23:00 tối nay. Vui lòng lưu ý.', 0, '2024-12-01 09:15:00');
+INSERT INTO `notifications` VALUES (4, 4, 'order', 'Đơn hàng #ORD00124 của bạn đã được giao thành công.', 1, '2024-12-01 10:00:00');
+INSERT INTO `notifications` VALUES (5, 5, 'promotion', 'Chương trình khuyến mãi Black Friday bắt đầu! Giảm giá đến 50% cho hàng loạt sản phẩm.', 0, '2024-12-01 10:30:00');
+INSERT INTO `notifications` VALUES (6, 6, 'system', 'Cập nhật mới cho ứng dụng của chúng tôi đã sẵn sàng. Hãy tải về ngay!', 0, '2024-12-01 11:00:00');
+INSERT INTO `notifications` VALUES (7, 7, 'order', 'Đơn hàng #ORD00125 của bạn đang được xử lý và sẽ được giao trong 3 ngày tới.', 0, '2024-12-01 11:30:00');
+INSERT INTO `notifications` VALUES (8, 8, 'promotion', 'Giảm giá đặc biệt cho khách hàng VIP-PRO. Sử dụng mã \"VIP15\" để nhận ưu đãi.', 0, '2024-12-01 12:00:00');
+INSERT INTO `notifications` VALUES (9, 9, 'system', 'Chúng tôi đã cập nhật chính sách bảo mật mới. Vui lòng đọc để hiểu rõ hơn về quy định của chúng tôi.', 1, '2024-12-01 12:30:00');
+INSERT INTO `notifications` VALUES (10, 10, 'order', 'Đơn hàng #ORD00126 của bạn đã bị hủy. Nếu bạn có bất kỳ câu hỏi nào, vui lòng liên hệ với chúng tôi.', 0, '2024-12-01 13:00:00');
+
+-- ----------------------------
+-- Table structure for order_items
+-- ----------------------------
+DROP TABLE IF EXISTS `order_items`;
+CREATE TABLE `order_items`  (
+  `order_item_id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `quantity` int NOT NULL,
+  `price` decimal(10, 2) NOT NULL,
+  PRIMARY KEY (`order_item_id`) USING BTREE,
+  INDEX `order_id`(`order_id` ASC) USING BTREE,
+  INDEX `product_id`(`product_id` ASC) USING BTREE,
+  CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of order_items
+-- ----------------------------
+INSERT INTO `order_items` VALUES (1, 1, 1, 2, 299.99);
+INSERT INTO `order_items` VALUES (2, 1, 2, 1, 149.99);
+INSERT INTO `order_items` VALUES (3, 2, 3, 1, 799.99);
+INSERT INTO `order_items` VALUES (4, 3, 4, 2, 75.00);
+INSERT INTO `order_items` VALUES (5, 4, 5, 1, 150.00);
+INSERT INTO `order_items` VALUES (6, 5, 1, 1, 599.99);
+INSERT INTO `order_items` VALUES (7, 6, 2, 3, 100.00);
+INSERT INTO `order_items` VALUES (8, 7, 3, 1, 799.99);
+INSERT INTO `order_items` VALUES (9, 8, 4, 2, 75.00);
+INSERT INTO `order_items` VALUES (10, 9, 5, 1, 150.00);
+
+-- ----------------------------
+-- Table structure for orders
+-- ----------------------------
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders`  (
+  `order_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `status` enum('pending','processing','shipped','completed','canceled') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT 'pending',
+  `total_price` decimal(10, 2) NOT NULL,
+  `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_at` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`order_id`) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of orders
+-- ----------------------------
+INSERT INTO `orders` VALUES (1, 1, 'pending', 599.99, '2024-12-01 13:47:59', '2024-12-01 13:47:59');
+INSERT INTO `orders` VALUES (2, 2, 'completed', 299.50, '2024-12-01 13:47:59', '2024-12-01 13:47:59');
+INSERT INTO `orders` VALUES (3, 3, 'shipped', 799.99, '2024-12-01 13:47:59', '2024-12-01 13:47:59');
+INSERT INTO `orders` VALUES (4, 4, 'processing', 150.00, '2024-12-01 13:47:59', '2024-12-01 13:47:59');
+INSERT INTO `orders` VALUES (5, 5, 'canceled', 450.00, '2024-12-01 13:47:59', '2024-12-01 13:47:59');
+INSERT INTO `orders` VALUES (6, 6, 'completed', 1200.00, '2024-12-01 13:47:59', '2024-12-01 13:47:59');
+INSERT INTO `orders` VALUES (7, 7, 'pending', 350.75, '2024-12-01 13:47:59', '2024-12-01 13:47:59');
+INSERT INTO `orders` VALUES (8, 8, 'shipped', 180.00, '2024-12-01 13:47:59', '2024-12-01 13:47:59');
+INSERT INTO `orders` VALUES (9, 9, 'processing', 950.99, '2024-12-01 13:47:59', '2024-12-01 13:47:59');
+INSERT INTO `orders` VALUES (10, 10, 'canceled', 650.00, '2024-12-01 13:47:59', '2024-12-01 13:47:59');
+
+-- ----------------------------
+-- Table structure for payments
+-- ----------------------------
+DROP TABLE IF EXISTS `payments`;
+CREATE TABLE `payments`  (
+  `payment_id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL,
+  `payment_method` enum('credit_card','paypal','cash_on_delivery') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `status` enum('pending','completed','failed','refunded') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT 'pending',
+  `amount` decimal(10, 2) NOT NULL,
+  `paid_at` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`payment_id`) USING BTREE,
+  INDEX `order_id`(`order_id` ASC) USING BTREE,
+  CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of payments
+-- ----------------------------
+INSERT INTO `payments` VALUES (1, 1, 'credit_card', 'completed', 449.98, '2024-11-20 10:30:00');
+INSERT INTO `payments` VALUES (2, 2, 'paypal', 'completed', 799.99, '2024-11-20 11:00:00');
+INSERT INTO `payments` VALUES (3, 3, 'cash_on_delivery', 'pending', 450.00, NULL);
+INSERT INTO `payments` VALUES (4, 4, 'credit_card', 'completed', 150.00, '2024-11-21 14:30:00');
+INSERT INTO `payments` VALUES (5, 5, 'paypal', 'failed', 599.99, NULL);
+INSERT INTO `payments` VALUES (6, 6, 'cash_on_delivery', 'completed', 150.00, '2024-11-22 09:45:00');
+INSERT INTO `payments` VALUES (7, 7, 'credit_card', 'pending', 299.99, NULL);
+INSERT INTO `payments` VALUES (8, 8, 'paypal', 'completed', 799.99, '2024-11-22 16:00:00');
+INSERT INTO `payments` VALUES (9, 9, 'cash_on_delivery', 'completed', 950.99, '2024-11-23 08:20:00');
+INSERT INTO `payments` VALUES (10, 10, 'credit_card', 'refunded', 150.00, '2024-11-23 13:30:00');
+
+-- ----------------------------
+-- Table structure for products
+-- ----------------------------
+DROP TABLE IF EXISTS `products`;
+CREATE TABLE `products`  (
+  `product_id` int NOT NULL AUTO_INCREMENT,
+  `product_code` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `price` decimal(10, 2) NOT NULL,
+  `stock` int NOT NULL DEFAULT 0,
+  `status` enum('active','inactive') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT 'active',
+  `category_id` int NOT NULL,
+  `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`product_id`) USING BTREE,
+  UNIQUE INDEX `product_code`(`product_code` ASC) USING BTREE,
+  INDEX `category_id`(`category_id` ASC) USING BTREE,
+  CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of products
+-- ----------------------------
+INSERT INTO `products` VALUES (1, 'EL001', 'Smartphone XYZ', 'A high-quality smartphone with a 6.5-inch display and 128GB storage.', 499.99, 50, 'active', 1, '2024-12-01 13:35:09', '2024-12-01 13:35:09');
+INSERT INTO `products` VALUES (2, 'CL001', 'Blue Jeans', 'Comfortable blue jeans made of premium denim for everyday wear.', 29.99, 100, 'active', 2, '2024-12-01 13:35:09', '2024-12-01 13:35:09');
+INSERT INTO `products` VALUES (3, 'HA001', 'Washing Machine ABC', 'A top-load washing machine with 7kg capacity and energy-saving features.', 399.99, 30, 'active', 3, '2024-12-01 13:35:09', '2024-12-01 13:35:09');
+INSERT INTO `products` VALUES (4, 'BH001', 'Anti-Aging Serum', 'An effective anti-aging serum for youthful and radiant skin.', 49.99, 200, 'active', 4, '2024-12-01 13:35:09', '2024-12-01 13:35:09');
+INSERT INTO `products` VALUES (5, 'SP001', 'Tennis Racket', 'A professional-grade tennis racket designed for beginners and experts.', 59.99, 25, 'active', 5, '2024-12-01 13:35:09', '2024-12-01 13:35:09');
+INSERT INTO `products` VALUES (6, 'TG001', 'Lego Set - Space Exploration', 'A fun and challenging Lego set for kids aged 8+ to explore space.', 69.99, 150, 'active', 6, '2024-12-01 13:35:09', '2024-12-01 13:35:09');
+INSERT INTO `products` VALUES (7, 'BK001', 'The Great Gatsby', 'A classic novel by F. Scott Fitzgerald, exploring themes of wealth and society.', 14.99, 300, 'active', 7, '2024-12-01 13:35:09', '2024-12-01 13:35:09');
+INSERT INTO `products` VALUES (8, 'FU001', 'Wooden Dining Table', 'A solid wood dining table that can seat up to six people.', 299.99, 20, 'active', 8, '2024-12-01 13:35:09', '2024-12-01 13:35:09');
+INSERT INTO `products` VALUES (9, 'FB001', 'Organic Green Tea', 'A box of premium organic green tea, perfect for a healthy lifestyle.', 12.99, 500, 'active', 9, '2024-12-01 13:35:09', '2024-12-01 13:35:09');
+INSERT INTO `products` VALUES (10, 'AU001', 'Car Tyre Set', 'A set of four durable car tyres for everyday driving.', 199.99, 40, 'active', 10, '2024-12-01 13:35:09', '2024-12-01 13:35:09');
+
+-- ----------------------------
+-- Table structure for roles
+-- ----------------------------
+DROP TABLE IF EXISTS `roles`;
+CREATE TABLE `roles`  (
+  `role_id` int NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`role_id`) USING BTREE,
+  UNIQUE INDEX `role_name`(`role_name` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of roles
+-- ----------------------------
+INSERT INTO `roles` VALUES (1, 'Admin', 'Quản trị viên có quyền truy cập và quản lý toàn bộ hệ thống, bao gồm thêm, sửa, xóa người dùng, sản phẩm, đơn hàng, báo cáo, và cài đặt hệ thống.', '2024-12-01 13:34:25', '2024-12-01 13:34:25');
+INSERT INTO `roles` VALUES (2, 'Manager', 'Quản lý có quyền quản lý đơn hàng, khách hàng, tạo báo cáo và phân tích dữ liệu, quản lý các yêu cầu hỗ trợ khách hàng.', '2024-12-01 13:34:25', '2024-12-01 13:34:25');
+INSERT INTO `roles` VALUES (3, 'User', 'Người dùng bình thường có thể duyệt sản phẩm, thêm vào giỏ hàng, thanh toán và quản lý tài khoản cá nhân.', '2024-12-01 13:34:25', '2024-12-01 13:34:25');
+INSERT INTO `roles` VALUES (4, 'Customer Support', 'Nhân viên hỗ trợ khách hàng, có quyền trả lời yêu cầu hỗ trợ và xử lý khiếu nại của khách hàng.', '2024-12-01 13:34:25', '2024-12-01 13:34:25');
+INSERT INTO `roles` VALUES (5, 'Guest', 'Khách chưa đăng nhập, có thể duyệt sản phẩm nhưng không thể thực hiện mua hàng hoặc các thao tác khác yêu cầu đăng nhập.', '2024-12-01 13:34:25', '2024-12-01 13:34:25');
+INSERT INTO `roles` VALUES (6, 'Marketing', 'Nhân viên marketing có quyền tạo và quản lý chiến dịch quảng cáo, khuyến mãi và các mã giảm giá.', '2024-12-01 13:34:25', '2024-12-01 13:34:25');
+INSERT INTO `roles` VALUES (7, 'Warehouse', 'Quản lý kho hàng, có quyền cập nhật số lượng hàng hóa, quản lý tồn kho và xử lý vận chuyển.', '2024-12-01 13:34:25', '2024-12-01 13:34:25');
+INSERT INTO `roles` VALUES (8, 'Finance', 'Nhân viên tài chính có quyền xem các giao dịch tài chính, hóa đơn và báo cáo tài chính.', '2024-12-01 13:34:25', '2024-12-01 13:34:25');
+
+-- ----------------------------
+-- Table structure for shippings
+-- ----------------------------
+DROP TABLE IF EXISTS `shippings`;
+CREATE TABLE `shippings`  (
+  `shipping_id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `city` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `postal_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `country` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `shipping_status` enum('pending','in_transit','delivered','returned') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT 'pending',
+  `estimated_delivery_date` datetime NULL DEFAULT NULL,
+  PRIMARY KEY (`shipping_id`) USING BTREE,
+  INDEX `order_id`(`order_id` ASC) USING BTREE,
+  CONSTRAINT `shippings_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of shippings
+-- ----------------------------
+INSERT INTO `shippings` VALUES (1, 1, '123 Main St, District 1', 'Ho Chi Minh City', '700000', 'Vietnam', 'in_transit', '2024-11-22 15:00:00');
+INSERT INTO `shippings` VALUES (2, 2, '456 Nguyen Hue, District 3', 'Hanoi', '100000', 'Vietnam', 'delivered', '2024-11-21 10:00:00');
+INSERT INTO `shippings` VALUES (3, 3, '789 Le Lai, District 5', 'Da Nang', '500000', 'Vietnam', 'pending', NULL);
+INSERT INTO `shippings` VALUES (4, 4, '321 Phan Boi Chau, District 10', 'HCMC', '700000', 'Vietnam', 'in_transit', '2024-11-23 14:00:00');
+INSERT INTO `shippings` VALUES (5, 5, '654 Nguyen Tri Phuong, District 11', 'Da Nang', '500000', 'Vietnam', 'returned', '2024-11-20 09:00:00');
+INSERT INTO `shippings` VALUES (6, 6, '987 Tran Hung Dao, District 4', 'Hanoi', '100000', 'Vietnam', 'delivered', '2024-11-19 18:00:00');
+INSERT INTO `shippings` VALUES (7, 7, '135 Le Duan, District 1', 'Ho Chi Minh City', '700000', 'Vietnam', 'pending', NULL);
+INSERT INTO `shippings` VALUES (8, 8, '246 Hoang Hoa Tham, District 6', 'Haiphong', '400000', 'Vietnam', 'in_transit', '2024-11-24 12:00:00');
+INSERT INTO `shippings` VALUES (9, 9, '468 Minh Khai, District 7', 'Hue', '200000', 'Vietnam', 'delivered', '2024-11-18 11:30:00');
+INSERT INTO `shippings` VALUES (10, 10, '789 Ngo Quyen, District 2', 'Can Tho', '900000', 'Vietnam', 'returned', '2024-11-17 16:00:00');
+
+-- ----------------------------
+-- Table structure for user_roles
+-- ----------------------------
+DROP TABLE IF EXISTS `user_roles`;
+CREATE TABLE `user_roles`  (
+  `user_id` int NOT NULL,
+  `role_id` int NOT NULL,
+  `assigned_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`, `role_id`) USING BTREE,
+  INDEX `role_id`(`role_id` ASC) USING BTREE,
+  CONSTRAINT `user_roles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_roles_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user_roles
+-- ----------------------------
+INSERT INTO `user_roles` VALUES (1, 1, '2024-12-01 13:34:46');
+INSERT INTO `user_roles` VALUES (2, 2, '2024-12-01 13:34:46');
+INSERT INTO `user_roles` VALUES (3, 4, '2024-12-01 13:34:46');
+INSERT INTO `user_roles` VALUES (4, 3, '2024-12-01 13:34:46');
+INSERT INTO `user_roles` VALUES (5, 5, '2024-12-01 13:34:46');
+INSERT INTO `user_roles` VALUES (6, 5, '2024-12-01 13:34:46');
+INSERT INTO `user_roles` VALUES (7, 6, '2024-12-01 13:34:46');
+INSERT INTO `user_roles` VALUES (8, 7, '2024-12-01 13:34:46');
+INSERT INTO `user_roles` VALUES (9, 8, '2024-12-01 13:34:46');
+INSERT INTO `user_roles` VALUES (10, 1, '2024-12-01 13:34:46');
+
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users`  (
+  `user_id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `fullname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `gender` enum('male','female','other') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT 'male',
+  `dob` date NOT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `role_id` int NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `avatar` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
+  `phone_number` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `status` enum('active','inactive') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT 'active',
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`) USING BTREE,
+  UNIQUE INDEX `username`(`username` ASC) USING BTREE,
+  UNIQUE INDEX `email`(`email` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------
+INSERT INTO `users` VALUES (1, 'admin_user', 'Nguyen Thi Hoa', 'female', '1990-05-15', 'admin@example.com', 1, 'admin_password_hash', 'avatar1.jpg', '0901234567', 'active', '123 Admin St, Hà Nội', '2024-12-01 13:34:38', '2024-12-01 13:34:38');
+INSERT INTO `users` VALUES (2, 'manager_user', 'Tran Minh Hoang', 'male', '1985-08-20', 'manager@example.com', 2, 'manager_password_hash', 'avatar2.jpg', '0912345678', 'active', '456 Manager Rd, Hà Nam', '2024-12-01 13:34:38', '2024-12-01 13:34:38');
+INSERT INTO `users` VALUES (3, 'support_user', 'Pham Mai Lan', 'female', '1992-03-10', 'support@example.com', 4, 'support_password_hash', 'avatar3.jpg', '0923456789', 'active', '789 Support Ave, Ninh Bình', '2024-12-01 13:34:38', '2024-12-01 13:34:38');
+INSERT INTO `users` VALUES (4, 'customer_user', 'Le Thi Lan', 'female', '1998-12-05', 'customer@example.com', 3, 'customer_password_hash', 'avatar4.jpg', '0934567890', 'active', '321 Customer Blvd, Thanh Hóa', '2024-12-01 13:34:38', '2024-12-01 13:34:38');
+INSERT INTO `users` VALUES (5, 'guest_user1', 'Nguyen Thi Lan', 'female', '2000-07-22', 'guest1@example.com', 5, 'guest_password_hash', 'avatar5.jpg', '0945678901', 'inactive', 'No address', '2024-12-01 13:34:38', '2024-12-01 13:34:38');
+INSERT INTO `users` VALUES (6, 'guest_user2', 'Hoang Minh Tuan', 'male', '1995-04-10', 'guest2@example.com', 5, 'guest_password_hash', 'avatar6.jpg', '0956789012', 'inactive', 'No address', '2024-12-01 13:34:38', '2024-12-01 13:34:38');
+INSERT INTO `users` VALUES (7, 'warehouse_user', 'Nguyen Thi Mai', 'female', '1993-11-30', 'warehouse@example.com', 6, 'warehouse_password_hash', 'avatar7.jpg', '0967890123', 'active', '654 Warehouse St, Nghệ An', '2024-12-01 13:34:38', '2024-12-01 13:34:38');
+INSERT INTO `users` VALUES (8, 'finance_user', 'Tran Minh Quang', 'male', '1987-06-18', 'finance@example.com', 7, 'finance_password_hash', 'avatar8.jpg', '0978901234', 'active', '987 Finance Rd, Hà Tĩnh', '2024-12-01 13:34:38', '2024-12-01 13:34:38');
+INSERT INTO `users` VALUES (9, 'marketing_user', 'Nguyen Minh Anh', 'male', '1994-09-12', 'marketing@example.com', 8, 'marketing_password_hash', 'avatar9.jpg', '0989012345', 'active', '123 Marketing St, Quảng Bình', '2024-12-01 13:34:38', '2024-12-01 13:34:38');
+INSERT INTO `users` VALUES (10, 'admin_support', 'Pham Minh Tuan', 'male', '1988-02-25', 'admin_support@example.com', 1, 'admin_support_password_hash', 'avatar10.jpg', '0990123456', 'active', '258 Admin Support Rd, Quảng Trị', '2024-12-01 13:34:38', '2024-12-01 13:34:38');
+
+SET FOREIGN_KEY_CHECKS = 1;

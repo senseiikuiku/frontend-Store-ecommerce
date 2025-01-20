@@ -1,0 +1,16 @@
+.pb {
+   padding-bottom: 53px;
+}
+
+.relative {
+   position: relative; /* Để làm cha cho các thành phần con */
+   height: 100%; /* Đảm bảo chiều cao đầy đủ nếu cần */
+}
+
+.height {
+   height: 200px;
+}
+
+.transiton_OutLet {
+   transition: all 0.3s linear;
+}
